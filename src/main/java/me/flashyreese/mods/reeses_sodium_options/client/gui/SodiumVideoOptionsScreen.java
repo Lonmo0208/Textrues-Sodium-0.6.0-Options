@@ -107,21 +107,17 @@ public class SodiumVideoOptionsScreen extends Screen implements ScreenPromptable
     }
 
     private void openDonationPrompt(SodiumGameOptions options) {
-        var prompt = new ScreenPrompt(this, DONATION_PROMPT_MESSAGE, 320, 190,
-                new ScreenPrompt.Action(Text.literal("Buy us a coffee"), this::openDonationPage));
+        ScreenPrompt prompt = new ScreenPrompt(this, DONATION_PROMPT_MESSAGE, 320, 190, new ScreenPrompt.Action(Text.literal("Buy us a coffee"), this::openDonationPage));
         prompt.setFocused(true);
-
         options.notifications.hasSeenDonationPrompt = true;
 
         try {
-            options.writeChanges();
+            SodiumGameOptions.writeToDisk(options);
         } catch (IOException e) {
-            SodiumClientMod.logger()
-                    .error("Failed to update config file", e);
+            SodiumClientMod.logger().error("Failed to update config file", e);
         }
     }
 
-    // Hackalicious! Rebuild UI
     public void rebuildUI() {
         this.clearAndInit();
     }
@@ -272,14 +268,12 @@ public class SodiumVideoOptionsScreen extends Screen implements ScreenPromptable
         options.notifications.hasClearedDonationButton = true;
 
         try {
-            options.writeChanges();
+            SodiumGameOptions.writeToDisk(options);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save configuration", e);
         }
 
         this.setDonationButtonVisibility(false);
-
-
         this.rebuildUI();
     }
 
@@ -386,8 +380,8 @@ public class SodiumVideoOptionsScreen extends Screen implements ScreenPromptable
     static {
         DONATION_PROMPT_MESSAGE = List.of(
                 StringVisitable.concat(Text.literal("Hello!")),
-                StringVisitable.concat(Text.literal("It seems that you've been enjoying "), Text.literal("Embeddium").setStyle(Style.EMPTY.withColor(0x27eb92)), Text.literal(", a port of Sodium for the Forge/NeoForge modloaders.")),
-                StringVisitable.concat(Text.literal("Embeddium like these are complex. They require "), Text.literal("thousands of hours").setStyle(Style.EMPTY.withColor(0xff6e00)), Text.literal(" of development, debugging, and tuning to create the experience that players have come to expect.")),
+                StringVisitable.concat(Text.literal("It seems that you've been enjoying "), Text.literal("Sodium").setStyle(Style.EMPTY.withColor(0x27eb92)), Text.literal(", a port of Sodium for the Forge/NeoForge modloaders.")),
+                StringVisitable.concat(Text.literal("Sodium like these are complex. They require "), Text.literal("thousands of hours").setStyle(Style.EMPTY.withColor(0xff6e00)), Text.literal(" of development, debugging, and tuning to create the experience that players have come to expect.")),
                 StringVisitable.concat(Text.literal("If you'd like to show your token of appreciation, and support the development of our mod in the process, then consider "), Text.literal("buying us a coffee").setStyle(Style.EMPTY.withColor(0xed49ce)), Text.literal(".")),
                 StringVisitable.concat(Text.literal("And thanks again for using the mod! We hope it helps you (and your computer.)"))
         );

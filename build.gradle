@@ -27,6 +27,9 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    flatDir {
+        dirs "libs"
+    }
 }
 
 dependencies {
@@ -35,7 +38,7 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     forge "net.minecraftforge:forge:${project.forge_version}"
 
-    modImplementation "maven.modrinth:embeddium:${project.sodium_version}"
+    modImplementation "libs:Sodium-NeoForge:mc1.20.1-0.6.0-Fix"
 }
 
 processResources {
@@ -66,7 +69,7 @@ def changelogText = file("changelog.md").getText('UTF-8')
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
 
-    projectId = "textrues-embeddium-options"
+    projectId = "textrues-sodium-options"
     versionNumber = "${project.version}"
     versionType = "beta"
     changelog = changelogText
@@ -75,7 +78,7 @@ modrinth {
     gameVersions = ["1.20", "1.20.1"]
     loaders = ["forge", "neoforge"]
     dependencies {
-        required.project "embeddium"
+        required.project "sodium"
     }
 }
 
@@ -91,7 +94,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addModLoader("Forge", "NeoForge")
     mainFile.addJavaVersion("Java 17", "Java 18")
     mainFile.addGameVersion("1.20", "1.20.1")
-    mainFile.addRequirement("embeddium")
+    mainFile.addRequirement("Sodium")
 
     def sourcesFile = mainFile.withAdditionalFile(sourcesJar)
 }

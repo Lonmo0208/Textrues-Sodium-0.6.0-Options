@@ -7,7 +7,7 @@ import net.minecraftforge.network.NetworkConstants;
 
 @Mod(ReesesSodiumOptions.MODID)
 public class ReesesSodiumOptions {
-    public static final String MODID = "textrues_embeddium_options";
+    public static final String MODID = "textrues_sodium_options";
 
     public ReesesSodiumOptions() {
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
