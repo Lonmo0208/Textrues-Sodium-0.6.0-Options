@@ -39,7 +39,7 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.textrues_sodium_options]]
-modId = "Sodium"
+modId = "sodium"
 mandatory = true
 versionRange = "[0.6.0,)"
 ordering = "NONE"
